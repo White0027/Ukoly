@@ -1,0 +1,3 @@
+﻿  spravná odpoved.cpp
+C:\Users\nabru\source\repos\spravná odpoved\spravná odpoved\spravná odpoved.cpp(25,25): warning C4267: inicializování: Převod z: size_t na: int, může dojít ke ztrátě dat.
+  spravná odpoved.vcxproj -> C:\Users\nabru\source\repos\spravná odpoved\x64\Debug\spravná odpoved.exe
