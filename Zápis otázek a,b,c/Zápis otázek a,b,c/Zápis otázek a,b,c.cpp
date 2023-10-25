@@ -1,8 +1,8 @@
-﻿#include <iostream>
+#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
-
+#include <vector>
 
 using namespace std;
 
@@ -15,50 +15,42 @@ struct Otazka {
 };
 
 struct Dotaznik {
-	Otazka* otazky;
-	int delka;
+	vector<Otazka> otazky;
 };
 
-Dotaznik* buildDotaznik(string path);
-int runDotaznik(Dotaznik* kviz);
-void reallocate(Otazka** old_arr, int old_size, int new_size);
-void vymazOtazky(Dotaznik* kviz);
+Dotaznik buildDotaznik(string path);
+int runDotaznik(Dotaznik kviz);
 
 int main()
 {
 	string path;
-	cout << "Zadejte cestu k souboru s otazkami (nazev souboru): ";
+	cout << "Zadejte cestu k souboru s otazkami: ";
 	cin >> path;
-	Dotaznik* kviz = buildDotaznik(path);
+	Dotaznik kviz = buildDotaznik(path);
 	cout << "Tve skore je: " << runDotaznik(kviz);
-	vymazOtazky(kviz);
-	delete kviz;
 }
 
-Dotaznik* buildDotaznik(string path)
+Dotaznik buildDotaznik(string path)
 {
 	ifstream file;
 	string line;
-	Dotaznik* kviz = new Dotaznik{ new Otazka[1], 0 };
+	Dotaznik kviz;
 
 	file.open(path);
 	if (!file.is_open()) {
 		cout << "Soubor se nepodarilo otevrit!" << endl;
-		return nullptr;
+		exit(1);
 	}
 
 	while (getline(file, line)) {
-		if (kviz->delka != 0) {
-			reallocate(&kviz->otazky, kviz->delka, kviz->delka + 1);
-		}
-
+		Otazka novaOtazka;
 		stringstream ss(line);
-		getline(ss, kviz->otazky[kviz->delka].otazka, ';');
-		getline(ss, kviz->otazky[kviz->delka].a, ';');
-		getline(ss, kviz->otazky[kviz->delka].b, ';');
-		getline(ss, kviz->otazky[kviz->delka].c, ';');
-		ss >> kviz->otazky[kviz->delka].spravnaOdpoved;
-		kviz->delka++;
+		getline(ss, novaOtazka.otazka, ';');
+		getline(ss, novaOtazka.a, ';');
+		getline(ss, novaOtazka.b, ';');
+		getline(ss, novaOtazka.c, ';');
+		ss >> novaOtazka.spravnaOdpoved;
+		kviz.otazky.push_back(novaOtazka);
 	}
 
 	file.close();
@@ -66,41 +58,26 @@ Dotaznik* buildDotaznik(string path)
 	return kviz;
 }
 
-int runDotaznik(Dotaznik* kviz)
+int runDotaznik(Dotaznik kviz)
 {
 	int skore = 0;
 	char odpoved;
-	for (int i = 0; i < kviz->delka; i++) {
-		cout << kviz->otazky[i].otazka << endl;
-		cout << "A: " << kviz->otazky[i].a << endl;
-		cout << "B: " << kviz->otazky[i].b << endl;
-		cout << "C: " << kviz->otazky[i].c << endl;
+	for (size_t i = 0; i < kviz.otazky.size(); i++) {
+		cout << kviz.otazky[i].otazka << endl;
+		cout << "A: " << kviz.otazky[i].a << endl;
+		cout << "B: " << kviz.otazky[i].b << endl;
+		cout << "C: " << kviz.otazky[i].c << endl;
 		cout << "Zadejte odpoved: ";
 		cin >> odpoved;
 
-		if (odpoved == kviz->otazky[i].spravnaOdpoved) {
+		if (odpoved == kviz.otazky[i].spravnaOdpoved) {
 			skore++;
 			cout << "Spravne!" << endl << endl;
 		}
-
 		else {
 			cout << "Spatne!" << endl << endl;
 		}
 	}
 
 	return skore;
-}
-
-void reallocate(Otazka** old_arr, int old_size, int new_size)
-{
-	Otazka* new_arr = new Otazka[new_size];
-	copy(*old_arr, *old_arr + old_size, &new_arr[0]);
-	delete[] * old_arr;
-	*old_arr = new_arr;
-}
-
-void vymazOtazky(Dotaznik* kviz)
-{
-	delete[] kviz->otazky;
-	kviz->otazky = nullptr;
 }
