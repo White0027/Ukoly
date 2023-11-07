@@ -1,0 +1,3 @@
+﻿  Linkedlist.cpp
+C:\Users\nabru\source\repos\Linkedlist\Linkedlist\Linkedlist.cpp(116,10): warning C4101: lel: neodkazovaná lokální proměnná
+  Linkedlist.vcxproj -> C:\Users\nabru\source\repos\Linkedlist\x64\Debug\Linkedlist.exe
