@@ -1,7 +1,6 @@
 import math
 
 class čtverec ():
-    print("Vytváříme čtverec")
     def __init__(self, a):
         self.a = a
 
@@ -42,7 +41,7 @@ class kvádr(krychle):
     def objem(self):
         return self.a * self.b * self.c
 
-class kruh(krychle):
+class kruh ():
     def __init__(self, r):
         self.r = r
         
@@ -52,7 +51,7 @@ class kruh(krychle):
     def obsah(self):
         return math.pi * self.r ** 2
 
-class válec(kruh):
+class válec (kruh):
     def __init__(self, r, v):
         super().__init__(r)
         self.v = v
@@ -63,7 +62,7 @@ class válec(kruh):
     def povrch(self):
         return 2 * math.pi * self.r * (self.r + self.v)
 
-class koule(válec):
+class koule (válec):
     def __init__(self, r, v):
         super().__init__(r, v)
         
@@ -75,31 +74,38 @@ class koule(válec):
     
 def main():
     ctverec1 = čtverec(5)
-    obdelnik1 = obdelník(5, 6)
-    krychle1 = krychle(5, 6, 7)
-    kvadr1 = kvádr(5, 6, 7)
+    obdelnik1 = obdelník(6, 7)
+    krychle1 = krychle(7, 8, 9)
+    kvadr1 = kvádr(2, 3, 4)
     kruh1 = kruh(5)
-    val1 = válec(5, 6)
-    koule1 = koule(5, 6)
+    val1 = válec(6, 7)
+    koule1 = koule(8, 9)
     
+    print("čtverec:")
     print("Obvod čtverce je:", ctverec1.obvod())
     print("Obsah čtverce je:", ctverec1.obsah())
     
+    print("\nObdélník:")
     print("Obvod obdelníku je:", obdelnik1.obvod())
     print("Obsah obdelníku je:", obdelnik1.obsah())
     
+    print("\nKrychle:")
     print("Objem krychle je:", krychle1.objem())
     print("Povrch krychle je:", krychle1.povrch())
     
+    print("\nKvádr:")
     print("Objem kvádru je:", kvadr1.objem())
     print("Povrch kvádru je:", kvadr1.povrch())
     
+    print("\nKruh:")
     print("Obvod kruhu je:", kruh1.obvod())
     print("Obsah kruhu je:", kruh1.obsah())
     
+    print("\nVálec:")
     print("Objem válce je:", val1.objem())
     print("Povrch válce je:", val1.povrch())
     
+    print("\nKouke:")
     print("Objem koule je:", koule1.objem())
     print("Povrch koule je:", koule1.povrch())
     
